@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Metro Tweets</title>
+<link type="text/css" href="mt-resources/mt-style.css" rel="stylesheet"/>
+<link type="text/css" href="animate-custom.css" rel="stylesheet"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="http://platform.twitter.com/widgets.js"></script>  
+<script type="text/javascript" src="templater.js"></script>
+<script type="text/javascript">
+$(function(){
+
+//get the JSON data from the Twitter search API
+$.getJSON("http://search.twitter.com/search.json?q=SharePoint&rpp=5&callback=?", function(data){
+    //loop the tweets
+    $(data.results).each(function(i,v){       
+        var tweet = v.text;        
+        var time = '<br/><span class="mt-created-time">' + relative_time(v.created_at) + '</span>';
+        var status = tweet.replace(/((https?|s?ftp|ssh)\:\/\/[^"\s\<\>]*[^.,;'">\:\s\<\>\)\]\!])/g, function(url) {
+            return '<br/><a href="'+url+'">'+url+'</a>';
+        }).replace(/\B@([_a-z0-9]+)/ig, function(reply) {
+            return  reply.charAt(0)+'<a href="http://twitter.com/'+reply.substring(1)+'">'+reply.substring(1)+'</a>';
+        }); 
+      //console.log(this);
+  
+        
+         var intenttemplate ='<div class="profile-picture"><img src="'+v.profile_image_url+'" />\
+         						<span class="mt-pro-name">'+v.from_user_name+'</span>\
+         					  </div>\
+         					  <div id="web_intent">\
+        					    <img src="mt-images/retweet.png" width="16" height="16" alt="Retweet">\
+        					    <a href="http://twitter.com/intent/retweet?tweet_id=' + v.id_str + '">Retweet</a>\
+        					    <img src="mt-images/reply.png" width="16" height="16" alt="Reply">\
+        					    <a href="http://twitter.com/intent/tweet?in_reply_to=' + v.id_str + '">Reply</a>\
+        					    <img src="mt-images/favorite.png" width="16" height="16" alt="Favorite">\
+        					    <a href="http://twitter.com/intent/favorite?tweet_id=' + v.id_str + '">Favorite</a>\
+        					  </div>';
+        
+        //var twitcontent = $.templater(str,{ url:'http://google.com', text: 'Edit Item',paragraph:'<a>awesome</a>' });
+
+       
+        $(".tweeter-list").append("<li><div class='profile-info'>"+intenttemplate+"</div><div class='tweet-info'>"+status+ time +"</div></li>").hide().fadeIn(750);           
+           
+    });
+     $('#mt-loading').hide().fadeOut(750);
+});
+
+  $(".tweeter-list li").live('click',function(){
+  		var mt_clicked = $(this);
+  		
+  		$(".tweeter-list li .profile-info .active").not($(this).find(".profile-info").hasClass('active')).toggle();	
+   		if($(".profile-info:visible,.tweet-info:hidden")){
+   			$(".profile-info:visible,.tweet-info:hidden").toggle();
+   			$(".active-li").removeClass('active-li');	
+   		}
+   		mt_clicked.find('.tweet-info').toggleClass('active').toggle();
+  		mt_clicked.toggleClass('active-li').find('.profile-info').toggleClass('active').toggle();
+  
+  });
+
+function relative_time(time_value) {  
+	  var values = time_value.split(" ");  
+	  time_value = values[1] + " " + values[2] + ", " + values[5] + " " + values[3];  
+	  var parsed_date = Date.parse(time_value);  
+	  var relative_to = (arguments.length > 1) ? arguments[1] : new Date();  
+	  var delta = parseInt((relative_to.getTime() - parsed_date) / 1000);  
+	  delta = delta + (relative_to.getTimezoneOffset() * 60);  
+  
+	  var r = '';  
+	  if (delta < 60) {  
+	        r = 'a minute ago';  
+	  } 
+	  else if(delta < 120) {  
+	        r = 'couple of minutes ago';  
+	  } 
+	  else if(delta < (45*60)) {  
+	        r = (parseInt(delta / 60)).toString() + ' minutes ago';  
+	  } 
+	  else if(delta < (90*60)) {  
+	        r = 'an hour ago';  
+	  } 
+	  else if(delta < (24*60*60)) {  
+	        r = '' + (parseInt(delta / 3600)).toString() + ' hours ago';  
+	  } 
+	  else if(delta < (48*60*60)) {  
+	        r = '1 day ago';  
+	  } 
+	  else {  
+	        r = (parseInt(delta / 86400)).toString() + ' days ago';  
+	  }  
+	  
+      return r;  
+  }  
+  
+ 
+
+});
+</script>
+<style type="text/css">
+body{
+	background: url('mt-images/diagonal-noise.png');
+}
+</style>
+</head>
+
+<body>
+<div id="container">
+
+
+<div id="metro-tweet">
+	<div id="mt-header">
+		<div id="twitter-logo"><a href="http://twitter.com"><img src="mt-resources/twitter-icon.png" /></a></div>
+		<div id="twitter-heading">
+			<h3>Tweetz</h3>
+			<p><small>SharePoint Twitter Feed</small></p>
+		</div>
+	</div>
+	<div id="tweets">
+	<ul class="tweeter-list">
+		<li id="mt-loading" style="text-align:center"><img src="mt-resources/mt-loader.gif"/><span>&nbsp;&nbsp;&nbsp;  Loading..</span></li>
+	</ul>
+	</div>
+</div>
+
+
+
+
+</div>
+</body>
+
+</html>

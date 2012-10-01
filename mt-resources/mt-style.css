@@ -1,0 +1,113 @@
+﻿/** METRO TWEET STYLES **/
+#metro-tweet *{
+	margin:0px;
+	padding:0px;
+	text-decoration:none;
+	font-family:Myriad Pro,Helvetica, sans-serif;
+	border:0px;
+}
+#mt-header{	
+	padding:30px;
+}
+#metro-tweet{
+	width:300px;
+	margin:0 auto;
+	background:#fff;
+	border:1px #fafafa solid;
+}
+#metro-tweet a{
+	color:#24b4ff !important;	
+}
+#twitter-logo{
+	width:60px;
+	float:left;
+	background:#06a1f1;
+	text-align:center;	
+	padding:15px 0px;;
+}
+#twitter-logo a{
+	height:38px;
+	width:38px;
+	margin:0 auto;
+	font-family:Helvetica;
+}
+#twitter-heading{
+	float:left;
+	width:150px;
+	background:#24b4ff;
+	color:#fff;
+	padding:15px;
+	
+}
+#twitter-heading h3{
+	font-size:1.2em;
+	font-weight:normal;
+}
+#tweets{
+	clear:both;
+	overflow:hidden;
+	padding-top:30px;
+}
+#tweets .tweeter-list li{
+	list-style-type:none;
+	padding:15px 30px;
+	border-left:4px #fff solid;
+	font-size:13px;
+	color:#999999;
+	cursor:pointer;
+	width:660px;
+	overflow:hidden;
+}
+#tweets .tweeter-list li:hover{
+	background:#fafafa;	
+	border-left:4px #34bd31 solid;
+
+}
+.active-li{
+	background:#fafafa;
+	border-color:#34bd31  !important;
+}
+.tweet-info,.profile-info{
+	width:240px;
+	float:left;	
+}
+.profile-info{
+	display:none;
+}
+.mt-created-time{
+	color:#555555;
+	clear:both;
+}
+/*** Profile ibfo tab ***/
+#web_intent{
+	clear:both;
+}
+#web_intent a{
+	padding-right:15px;
+}
+.profile-picture span {
+	text-align:right;
+	margin-left:5px;
+}
+.profile-picture img {
+  border: 1px solid #34BD31 !important;
+  border-radius: 50% 50% 50% 50%;
+}
+
+.mt-pro-name{
+	white-space: nowrap;
+	width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size:1.5em; position:relative; top:-20px;
+	text-align:right !important;;
+}
+/** Loading icon ***/
+#mt-loading{
+	display:block;
+	margin-left:-60%;
+}
+#mt-loading img, #mt-loading span{
+	display:inline;
+	vertical-align:middle;
+}
